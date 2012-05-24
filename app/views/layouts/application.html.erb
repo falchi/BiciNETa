@@ -7,18 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-    <h1><%= link_to "BiciNETa", root_path %></h1>
+    <h1><%= link_to "BiciNETa!", root_path %></h1>
     <% if signed_in? %>
           Logueado como <%= link_to current_user.name, current_user %>
           <%= link_to "(Salir)", signout_path, method: "delete" %>
     <% end %>
 
-<% if signed_in? %>
+
     <%= yield %>
-<% else %>
-	<%= render template: "sessions/new" %>
-<% end %>
-
-
 </body>
 </html>
