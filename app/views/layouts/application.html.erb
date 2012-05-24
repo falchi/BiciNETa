@@ -13,7 +13,12 @@
           <%= link_to "(Salir)", signout_path, method: "delete" %>
     <% end %>
 
-
+<% if signed_in? %>
     <%= yield %>
+<% else %>
+  <%= render template: "sessions/new" %>
+<% end %>
+
+
 </body>
 </html>
