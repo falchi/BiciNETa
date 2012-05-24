@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-	
+
+  acts_as_gmappable
+
 	before_create :create_remember_token #antes de crear el usuario se le creará su remember_token
   before_save :email_downcase#{ |user| user.email = email.downcase }
   before_save :encrypt_password
@@ -16,7 +18,14 @@ class User < ActiveRecord::Base
 
   validates :email_confirmation, presence: true
   
-	attr_accessible :name, :email, :email_confirmation, :password
+	attr_accessible :name, :email, :email_confirmation, :password, :latitude, :longitude
+
+  def gmaps4rails_infowindow
+        "<h4>ACA!</h4>"
+  end
+  def gmaps4rails_title
+        "Juan"# add here whatever text you desire
+      end
 
   def email_downcase
       self.email = self.email.downcase

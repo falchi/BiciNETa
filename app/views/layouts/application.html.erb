@@ -3,6 +3,7 @@
 <head>
   <title>BiciNETa</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag 'gmaps4rails' %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -21,4 +22,8 @@
 
 
 </body>
+<footer>
+  <p><%= yield :scripts %></p>
+  <p>&copy; BiciNETa 2012</p>
+</footer>
 </html>
