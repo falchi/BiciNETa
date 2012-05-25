@@ -34,7 +34,6 @@ class PointsController < ApplicationController
 
   def create
     @point = Point.new(params[:point])
-    params[:point][:user_id] = @current_user.id
 
     respond_to do |format|
       if @point.save

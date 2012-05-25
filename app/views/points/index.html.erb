@@ -11,6 +11,7 @@
 <table>
   <tr>
     <th>Nombre</th>
+    <th>Creador</th>
     <th>Address</th>
     <th>Latitude</th>
     <th>Longitude</th>
@@ -21,6 +22,7 @@
   <% @points.each do |p| %>
       <tr>
         <td><%= link_to p.place, p %></td>
+        <td><%= link_to p.user.name, p.user %></td>
         <td><%= p.address %></td>
         <td><%= p.latitude %></td>
         <td><%= p.longitude %></td>

@@ -14,6 +14,7 @@
   <div class="field">
     <%= f.label :place, "Lugar" %><br />
     <%= f.text_field :place %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
   </div>
   <div class="field">
     <%= f.label :address, "Dirección (Ej: Vicuña Mackenna 3939, San Joaquín, Santiago)" %><br />

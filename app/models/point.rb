@@ -1,5 +1,5 @@
 class Point < ActiveRecord::Base
-  attr_accessible :latitude,:longitude,:address,:place
+  attr_accessible :latitude,:longitude,:address,:place,:user_id
 
   belongs_to :user
 
