@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @point.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @point.longitude %>
+</p>
+
+<p>
+  <b>Place:</b>
+  <%= @point.place %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @point.address %>
+</p>
+
+<p>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=300x200&sensor=false&zoom=13&markers=#{@point.latitude}%2C#{@point.longitude}" %>
+</p>
+
+<%= link_to 'Edit', edit_point_path(@point) %> |
+<%= link_to 'Back', points_path %>

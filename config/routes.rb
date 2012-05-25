@@ -1,5 +1,6 @@
 BiciNETa::Application.routes.draw do
   resources :users
+  resources :points
 
   root :to => 'users#index'
 
