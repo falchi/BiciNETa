@@ -5,19 +5,52 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-</head>
-<body>
-<h1><%= link_to "BiciNETa!", root_path %></h1>
-<% if signed_in? %>
-    Logueado como <%= link_to current_user.name, current_user %>
-    <%= link_to "(Salir)", signout_path, method: "delete" %>
-<% end %>
+  <style>
+    body {
+        width: 800px;
+        margin: 0 auto;
+    }
+    form {
+        border: 1px solid #CCCCCC;
+        padding: 10px;
 
-<ul style="display: inline;">
-  <li><%= link_to "Users", users_path %></li>
-  <li><%= link_to "Points", points_path %></li>
-  <li></li>
-</ul>
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    ul li {
+      padding: 2px;
+      border: 1px solid #CCCCCC;
+      float: left;
+    }
+
+    table {
+      border: 1px solid #CCCCCC;
+      width: 800px;
+    }
+  </style>
+
+</head>
+<body class="bordered" style="padding: 10px">
+<div class="bordered" style="text-align: center; margin-bottom: 10px;">
+  <h1><%= link_to "BiciNETa!", root_path %></h1>
+</div>
+
+<% if signed_in? %>
+    <ul style="display: inline;">
+      <li><%= link_to "Users", users_path %></li>
+      <li><%= link_to "Points", points_path %></li>
+      <li style="float: right">
+        Logueado como <%= link_to current_user.name, current_user %>
+        <%= link_to "(Salir)", signout_path, method: "delete" %>
+      </li>
+    </ul>
+    </br>
+
+<% end %>
 
 <% if signed_in? %>
     <%= yield %>

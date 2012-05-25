@@ -1,15 +1,32 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @user.name %>
-</p>
+<div class="bordered" style="padding: 10px;">
+  <p>
+    <b>Name:</b>
+    <%= @user.name %>
+  </p>
 
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
+  <p>
+    <b>Email:</b>
+    <%= @user.email %>
+  </p>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+  <table style="width: 700px; margin: 0 auto;">
+    <tr>
+      <th>Nombre</th>
+      <th>Dirección</th>
+    </tr>
+    <% @points.each do |p| %>
+        <tr>
+          <td><%= link_to p.place, p %></td>
+          <td><%= p.address %></td>
+        </tr>
+    <% end %>
+  </table>
+
+
+
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Back', users_path %>
+</div>

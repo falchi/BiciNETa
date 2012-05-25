@@ -1,28 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Latitude:</b>
-  <%= @point.latitude %>
-</p>
+<div class="bordered" style="padding: 10px;">
+  <p>
+    <b>Place:</b>
+    <%= @point.place %>
+  </p>
 
-<p>
-  <b>Longitude:</b>
-  <%= @point.longitude %>
-</p>
+  <p>
+    <b>Address:</b>
+    <%= @point.address %>
+  </p>
 
-<p>
-  <b>Place:</b>
-  <%= @point.place %>
-</p>
+  <p>
+    <b>Latitude:</b>
+    <%= @point.latitude %>
+  </p>
 
-<p>
-  <b>Address:</b>
-  <%= @point.address %>
-</p>
+  <p>
+    <b>Longitude:</b>
+    <%= @point.longitude %>
+  </p>
+  <p>
+      <%= image_tag "http://maps.google.com/maps/api/staticmap?size=300x200&sensor=false&zoom=13&markers=#{@point.latitude}%2C#{@point.longitude}" %>
+  </p>
+  <p>
+      <b>Creador:</b>
+      <%= link_to @user.name, @user %>
+  </p>
 
-<p>
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=300x200&sensor=false&zoom=13&markers=#{@point.latitude}%2C#{@point.longitude}" %>
-</p>
+</div>
+
 
 <%= link_to 'Edit', edit_point_path(@point) %> |
 <%= link_to 'Back', points_path %>

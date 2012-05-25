@@ -1,6 +1,10 @@
 class PointsController < ApplicationController
   def index
-    @points = Point.all
+    if params[:search].present?
+      @points = Point.where("place like ?", "%" + params[:search].to_s + "%")
+    else
+      @points = Point.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,6 +14,7 @@ class PointsController < ApplicationController
 
   def show
     @point = Point.find(params[:id])
+    @user = @point.user
 
     respond_to do |format|
       format.html # show.html.erb
@@ -29,6 +34,7 @@ class PointsController < ApplicationController
 
   def create
     @point = Point.new(params[:point])
+    params[:point][:user_id] = @current_user.id
 
     respond_to do |format|
       if @point.save

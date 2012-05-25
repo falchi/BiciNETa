@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
 
 	before_create :create_remember_token #antes de crear el usuario se le creará su remember_token
-  before_save :email_downcase#{ |user| user.email = email.downcase }
+  before_save :email_downcase
   before_save :encrypt_password
 
-  #before_save { |user| user.password = encrypt(user.password) }
+  has_many :points
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

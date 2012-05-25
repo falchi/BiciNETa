@@ -2,7 +2,11 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if params[:search].present?
+      @users = User.where("name like ?", "%" + params[:search].to_s + "%")
+    else
+      @users = User.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +18,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @points = @user.points
 
     respond_to do |format|
       format.html # show.html.erb

@@ -1,21 +1,29 @@
 <h1>Listado de puntos</h1>
 
+<div id="search_points" style="margin-bottom: 10px;">
+  <%= form_tag points_path, method: :get do %>
+      <%= label_tag :Búsqueda %>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag :Buscar %>
+  <% end %>
+</div>
+
 <table>
   <tr>
+    <th>Nombre</th>
+    <th>Address</th>
     <th>Latitude</th>
     <th>Longitude</th>
-    <th>Type</th>
-    <th>Address</th>
+    <th></th>
     <th></th>
   </tr>
 
   <% @points.each do |p| %>
       <tr>
+        <td><%= link_to p.place, p %></td>
+        <td><%= p.address %></td>
         <td><%= p.latitude %></td>
         <td><%= p.longitude %></td>
-        <td><%= p.place %></td>
-        <td><%= p.address %></td>
-        <td><%= link_to 'Ver', p %></td>
         <td><%= link_to 'Editar', edit_point_path(p) %></td>
         <td><%= link_to 'Eliminar', p, confirm: 'Estás seguro de eliminar a ' + p.address + '?', method: :delete %></td>
       </tr>

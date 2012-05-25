@@ -1,5 +1,13 @@
 <h1>Listado de usuarios</h1>
 
+<div id="search_users" style="margin-bottom: 10px;">
+  <%= form_tag users_path, method: :get do %>
+      <%= label_tag :Búsqueda %>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag :Buscar %>
+  <% end %>
+</div>
+
 <table>
   <tr>
     <th>Nombre</th>
@@ -11,9 +19,8 @@
 
   <% @users.each do |user| %>
       <tr>
-        <td><%= user.name %></td>
+        <td><%= link_to user.name, user %></td>
         <td><%= user.email %></td>
-        <td><%= link_to 'Ver', user %></td>
         <td><%= link_to 'Editar', edit_user_path(user) %></td>
         <td><%= link_to 'Eliminar', user, confirm: 'Estás seguro de eliminar a ' + user.name + '?', method: :delete %></td>
       </tr>
@@ -23,7 +30,5 @@
 <br/>
 
 <%= link_to 'Nuevo Usuario', new_user_path %>
-
-<h3>GoogleMaps</h3>
 
 
