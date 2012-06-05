@@ -1,12 +1,19 @@
 class SessionsController < ApplicationController
+
+  def welcome
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
+
   def new
 
-  end  		
+  end
 
   def create
     user = User.find_by_email(params[:session][:email]) #busca según el email ingresado
     if user && user.log_in(params[:session][:password]) #si existe y coincide la pass => retorna el user
-      sign_in user 
+      sign_in user
       redirect_to root_path
     else
       flash.now[:error] = 'Invalid email/password combination' # Not quite right!

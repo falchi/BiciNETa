@@ -1,68 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <title>BiciNETa</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <style>
-    body {
-        width: 800px;
-        margin: 0 auto;
-        border: 1px solid #CCCCCC
-    }
-    form {
-        border: 1px solid #CCCCCC;
-        padding: 10px;
-
-    }
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    ul li {
-      padding: 2px;
-      border: 1px solid #CCCCCC;
-      float: left;
-    }
-
-    table {
-      border: 1px solid #CCCCCC;
-      width: 800px;
-    }
+  <style type="text/css">
+      body {
+          padding-top: 60px;
+          padding-bottom: 40px;
+      }
   </style>
 
 </head>
-<body style="padding: 10px">
-<div class="bordered" style="text-align: center; margin-bottom: 10px;">
-  <h1><%= link_to "BiciNETa!", root_path %></h1>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="#">BiciNETa</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="divider-vertical" style="margin: 0 25px;"></li>
+          <li><%= link_to "Home", welcome_path %></li>
+          <li><%= link_to "Users", users_path %></li>
+          <li><%= link_to "Points", points_path %></li>
+        </ul>
+
+        <% if signed_in? %>
+
+            <div class="btn-group pull-right">
+
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="icon-user"></i> <%= (current_user.name).titleize %>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Perfil", current_user %></li>
+                <li class="divider"></li>
+                <li><%= link_to "Salir", signout_path, method: "delete" %></li>
+              </ul>
+            </div>
+
+        <% else %>
+            <%= form_for(:session, url: sessions_path, html: {class: "navbar-form pull-right"}) do |f| %>
+                <%= f.text_field :email %>
+                <%= f.password_field :password %>
+                <%= f.submit "Entrar", class: "btn-primary" %>
+            <% end %>
+        <% end %>
+
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+  </div>
 </div>
 
-<% if signed_in? %>
-    <ul style="display: inline;">
-      <li><%= link_to "Users", users_path %></li>
-      <li><%= link_to "Points", points_path %></li>
-      <li style="float: right">
-        Logueado como <%= link_to current_user.name, current_user %>
-        <%= link_to "(Salir)", signout_path, method: "delete" %>
-      </li>
-    </ul>
-    </br>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <%= render "layouts/user_sumary" %>
+    <% if signed_in? %>
+        <div class="span10 well">
+        <%= yield %>
+        </div>
+    <% else %>
+        <div class="span10 well">
+        <%= render template: "sessions/welcome" %>
+        </div>
+    <% end %>
+  </div>
+  <footer>
+    <p>&copy; BiciNETa 2012</p>
+  </footer>
+</div>
 
-<% end %>
 
-<% if signed_in? %>
-    <%= yield %>
-<% else %>
-    <%= render template: "sessions/new" %>
-<% end %>
 
 </body>
-
-<footer>
-  <p>&copy; BiciNETa 2012</p>
-</footer>
 
 </html>

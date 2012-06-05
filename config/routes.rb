@@ -6,7 +6,10 @@ BiciNETa::Application.routes.draw do
 
   #login
   resources :sessions, only: [:new, :create, :destroy]
+
+
   match '/signup', to: 'users#new'
+  match '/welcome', to: 'sessions#welcome'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 

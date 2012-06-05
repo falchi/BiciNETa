@@ -1,0 +1,18 @@
+<div class="span2">
+  <% if signed_in? %>
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="btn nav-header"><%= link_to current_user.name, current_user %></li>
+          <li class="nav-header">Puntos (<%= current_user.points.count %>)</li>
+          <ul>
+            <li><a href="#">Ciclovías</a></li>
+            <li><a href="#">Talleres</a></li>
+            <li><a href="#">Tiendas</a></li>
+            <li><a href="#">Estacionamientos</a></li>
+          </ul>
+        </ul>
+      </div>
+  <% end %>
+
+  <!--/.well -->
+</div><!--/span-->

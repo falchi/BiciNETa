@@ -1,40 +1,40 @@
 <h1>Listado de puntos</h1>
 
-<div id="search_points" style="margin-bottom: 10px;">
-  <%= form_tag points_path, method: :get do %>
-      <%= label_tag :Búsqueda %>
+<div id="search_points" style="margin-top: 20px;">
+  <%= form_tag points_path, {class: "form-search", method: :get} do %>
       <%= text_field_tag :search, params[:search] %>
-      <%= submit_tag :Buscar %>
+      <%= submit_tag :Buscar, class: "btn" %>
   <% end %>
 </div>
 
-<table>
+<table class="table table-striped table-bordered">
   <tr>
     <th>Nombre</th>
     <th>Creador</th>
     <th>Address</th>
     <th>Latitude</th>
     <th>Longitude</th>
-    <th></th>
-    <th></th>
+    <th>#</th>
   </tr>
 
   <% @points.each do |p| %>
       <tr>
-        <td><%= link_to p.place, p %></td>
+        <td>
+          <%= link_to p.place, p %>
+        </td>
         <td><%= link_to p.user.name, p.user %></td>
         <td><%= p.address %></td>
         <td><%= p.latitude %></td>
         <td><%= p.longitude %></td>
-        <td><%= link_to 'Editar', edit_point_path(p) %></td>
-        <td><%= link_to 'Eliminar', p, confirm: 'Estás seguro de eliminar a ' + p.address + '?', method: :delete %></td>
+        <td>
+          <a href="<%= edit_point_path(p) %>"><i class="icon-edit"></i></a>
+          <a href="<%= p %>" data-confirm="Estás seguro de eliminar a <%= p.address %>?" data-method="delete" rel="nofollow"><i class="icon-remove"></i></a>
+        </td>
       </tr>
   <% end %>
 </table>
 
-<br/>
-
-<%= link_to 'Nuevo Punto', new_point_path %>
+<%= link_to 'Nuevo Punto', new_point_path, class: "btn" %>
 
 
 
