@@ -70,7 +70,7 @@ class PointsController < ApplicationController
     @point.destroy
 
     respond_to do |format|
-      format.html { redirect_to points_path }
+      format.html { redirect_to points_path, notice: "El punto " + @point.place + " ha sido eliminado." }
       format.json { head :no_content }
     end
   end

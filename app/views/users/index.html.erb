@@ -23,10 +23,11 @@
         <td><%= user.email %></td>
         <td>
           <a href="<%= edit_user_path(user) %>"><i class="icon-edit"></i></a>
-          <a href="<%= user %>" data-confirm="Estás seguro de eliminar a <%= user.name %>?" data-method="delete" rel="nofollow"><i class="icon-remove"></i></a>
+          <a href="<%= user_path(user) %>" data-confirm="Estás seguro de eliminar a <%= user.name %>?" data-method="delete" rel="nofollow"><i class="icon-remove"></i></a>
         </td>
       </tr>
   <% end %>
 </table>
+<p id="notice"><%= notice %></p>
 
 <%= link_to 'Nuevo Usuario', new_user_path, class: "btn" %>

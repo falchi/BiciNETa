@@ -28,11 +28,13 @@
         <td><%= p.longitude %></td>
         <td>
           <a href="<%= edit_point_path(p) %>"><i class="icon-edit"></i></a>
-          <a href="<%= p %>" data-confirm="Estás seguro de eliminar a <%= p.address %>?" data-method="delete" rel="nofollow"><i class="icon-remove"></i></a>
+          <a href="<%= point_path(p) %>" data-confirm="Estás seguro de eliminar a <%= p.address %>?" data-method="delete" rel="nofollow"><i class="icon-remove"></i></a>
         </td>
       </tr>
   <% end %>
 </table>
+<p id="notice"><%= notice %></p>
+
 
 <%= link_to 'Nuevo Punto', new_point_path, class: "btn" %>
 
