@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   def welcome
+    @user = User.new
     respond_to do |format|
       format.html # index.html.erb
     end

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-	before_create :create_remember_token #antes de crear el usuario se le creará su remember_token
+  before_create :create_remember_token #antes de crear el usuario se le creará su remember_token
   before_save :email_downcase
   before_save :encrypt_password
 
@@ -8,15 +8,15 @@ class User < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates_presence_of :name, :password
+  validates_presence_of :name, :email, :password, :password_confirmation
 
-  validates :email, presence: true, format: {with: VALID_EMAIL_REGEX},
+  validates :email, format: {with: VALID_EMAIL_REGEX},
                     uniqueness: {case_sensitive: false},
                     confirmation: true #crea el pseudo-atributo "email_confirmation"
 
-  validates :email_confirmation, presence: true
+  validates :password, confirmation: true 
   
-	attr_accessible :name, :email, :email_confirmation, :password, :latitude, :longitude
+  attr_accessible :name, :email, :password, :password_confirmation
 
   def email_downcase
       self.email = self.email.downcase

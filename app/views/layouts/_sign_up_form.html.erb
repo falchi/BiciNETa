@@ -1,0 +1,35 @@
+<div class="span2">  
+  <div class="well sidebar-nav">
+    <h2>Regístrate!</h2>    
+    <br>
+    <% if @user.errors.any? %>
+          <div class="alert alert-error">
+            <span class="label label-important">
+              Hay <%= pluralize(@user.errors.count, "error", "errores") %>:
+            </span>
+            <ul>
+              <% @user.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+    <%= form_for(@user, action: "sessions#new") do |f| %>
+      <%= f.label :name, "Nombre" %>
+      <%= f.text_field :name, class: "span15" %>
+
+      <%= f.label :email, "Mail" %>
+      <%= f.text_field :email, class: "span15" %>
+
+      <%= f.label :password, "Contraseña" %>
+      <%= f.password_field :password, class: "span15" %>
+
+      <%= f.label :password_confirmation, "Confirmar contraseña" %>
+      <%= f.password_field :password_confirmation, class: "span15" %>
+
+      <br>
+      <%= f.submit "Registrarse", class: "btn btn-large btn-primary span15" %>
+    <% end %>
+  </div>
+</div>

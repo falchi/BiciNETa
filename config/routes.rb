@@ -2,13 +2,12 @@ BiciNETa::Application.routes.draw do
   resources :users
   resources :points
 
-  root :to => 'users#index'
+  root :to => 'sessions#welcome'
 
   #login
   resources :sessions, only: [:new, :create, :destroy]
 
-
-  match '/signup', to: 'users#new'
+  match '/signup', to: 'users#new', as: "sign_up"
   match '/welcome', to: 'sessions#welcome'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
