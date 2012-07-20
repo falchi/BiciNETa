@@ -25,15 +25,16 @@
         <span class="icon-bar"></span>
       </a>      
       <a class="brand" href="<%= root_path %>" >BiciNETa</a>      
-
-      <div class="nav-collapse">       
-        <% if signed_in? %>            
-          <ul class="nav">
+      <ul class="nav">
             <li class="divider-vertical" style="margin: 0 25px;"></li>
             <li><%= link_to "Home", welcome_path %></li>
             <li><%= link_to "Users", users_path %></li>
             <li><%= link_to "Points", points_path %></li>
           </ul> 
+
+      <div class="nav-collapse">       
+        <% if signed_in? %>            
+          
             <div class="btn-group pull-right">             
               <button class="btn">
                 <i class="icon-user"></i>
@@ -73,16 +74,16 @@
   <% end %> 
 
   <div class="row-fluid">   
-     
-    <div class="span10 well">
-      <%= yield %>
-    </div>
-
+     <% @user = User.new unless @user%>
     <% if signed_in? %>      
       <%= render "layouts/user_sumary" %>
     <% else %> 
       <%= render "layouts/sign_up_form" %>
     <% end %>  
+
+    <div class="span10 well">
+      <%= yield %>
+    </div>
 
   </div>
 

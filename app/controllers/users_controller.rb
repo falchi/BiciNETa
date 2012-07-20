@@ -56,9 +56,9 @@ class UsersController < ApplicationController
         sign_in @user
         format.html { redirect_to root_path, notice: 'Bienvenido '+@user.name+'! :)' }
         format.json { render json: @user, status: :created, location: @user }
-      else
-        flash[:error] = "No se pudo registrar"
-        format.html { render 'new' }
+      else        
+        #flash[:error] = "Vuelve a llenar el formulario de registro, ocurrieron errores!"
+        format.html { render "sessions/welcome" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

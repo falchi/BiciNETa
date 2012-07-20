@@ -1,8 +1,6 @@
 # encoding: utf-8
 class SessionsController < ApplicationController
 
-
-
   def welcome
     respond_to do |format|
       format.html # index.html.erb
