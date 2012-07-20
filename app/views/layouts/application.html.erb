@@ -65,19 +65,27 @@
 </div>
 
 <div class="container-fluid">
-  <div class="row-fluid">    
-    <% if signed_in? %>
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>">
+      <a class="close" data-dismiss="alert" href="#">×</a>
+      <span style="text-align: center"><%= value %></span>
+    </div>
+  <% end %> 
+
+  <div class="row-fluid">   
+     
+    <div class="span10 well">
+      <%= yield %>
+    </div>
+
+    <% if signed_in? %>      
       <%= render "layouts/user_sumary" %>
-      <div class="span10 well">
-        <%= yield %>
-      </div>
-    <% else %>        
+    <% else %> 
       <%= render "layouts/sign_up_form" %>
-      <div class="span10 well">
-        <%= render template: "sessions/welcome" %>
-      </div>
-    <% end %>
+    <% end %>  
+
   </div>
+
   <footer>
     <p>&copy; BiciNETa 2012</p>
   </footer>

@@ -39,7 +39,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    if current_user.is_admin? 
+      @user = User.find(params[:id])
+    else
+      redirect_to welcome_path
+    end
   end
 
   # POST /users
@@ -53,7 +57,8 @@ class UsersController < ApplicationController
         format.html { redirect_to root_path, notice: 'Bienvenido '+@user.name+'! :)' }
         format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "new" }
+        flash[:error] = "No se pudo registrar"
+        format.html { render 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

@@ -11,8 +11,8 @@
 <table class="table table-striped table-bordered">
   <tr>
     <th>Nombre</th>
-    <th>Email</th>
-    <th></th>
+    <th>Email</th>    
+    <th></th>    
   </tr>
 
   <% @users.each do |user| %>
@@ -24,10 +24,12 @@
         <td>
           <a href="<%= edit_user_path(user) %>"><i class="icon-edit"></i></a>
           <a href="<%= user_path(user) %>" data-confirm="Estás seguro de eliminar a <%= user.name %>?" data-method="delete" rel="nofollow"><i class="icon-remove"></i></a>
-        </td>
+        </td>      
       </tr>
   <% end %>
 </table>
 <p id="notice"><%= notice %></p>
 
+ 
 <%= link_to 'Nuevo Usuario', new_user_path, class: "btn" %>
+
