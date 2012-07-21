@@ -13,6 +13,12 @@ BiciNETa::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
   match '/testing', to: 'sessions#testing'
 
+  resources :points do
+      collection do
+        post :save_coords
+      end
+    end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

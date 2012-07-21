@@ -1,4 +1,13 @@
 class PointsController < ApplicationController
+
+  before_filter :check_login, only: [:new,:edit]
+
+  def check_login
+    unless signed_in?
+      redirect_to root_path
+    end
+  end
+
   def index
     if params[:search].present?
       @points = Point.where("place like ?", "%" + params[:search].to_s + "%")
@@ -81,4 +90,23 @@ class PointsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def save_coords
+    @user = User.find(current_user.id)
+    @point = Point.new
+
+    if params[:latitude] && params[:longitude]
+      if @point.update_attributes({ latitude: params[:latitude], longitude: params[:longitude], 
+                                    place: params[:place], address: params[:address], user_id: current_user.id})
+        flash[:success] = "El punto "+ @point.place + " ha sido creado correctamente :) "
+        redirect_to points_path
+      else
+        flash[:error] = "No se pudo guardar el punto"
+        render 'new'
+      end
+    else
+      render 'new'
+    end
+  end
+
 end
