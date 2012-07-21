@@ -26,6 +26,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
+    flash[:error] = "Se ha cerrado sesión exitosamente!"
     redirect_to root_path
   end
 end

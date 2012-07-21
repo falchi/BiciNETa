@@ -4,6 +4,7 @@ class PointsController < ApplicationController
 
   def check_login
     unless signed_in?
+      flash[:error] = "Para editar o ingresar un nuevo punto debes estar logueado!"
       redirect_to root_path
     end
   end
