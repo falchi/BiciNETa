@@ -67,6 +67,7 @@
 </div>
 
 <div class="container-fluid">
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script> 
   
   <% flash.each do |key, value| %>
     <div class="alert alert-<%= key %>">
@@ -90,15 +91,14 @@
 
   </div>
 
+
+
   <footer>
     <p>&copy; BiciNETa 2012</p>
   </footer>
 
   <%= debug(params) if Rails.env.development? %>
-</div>
-
-
+  </div>
 
 </body>
-
 </html>

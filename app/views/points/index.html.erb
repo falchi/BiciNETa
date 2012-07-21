@@ -1,3 +1,14 @@
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script> 
+
+
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; }  
+  .container-fluid { height: 100%;}
+  .row-fluid { height: 90%;}
+  #gMap { height: 100%; width: 50%;}
+</style>
+
 <h1>Listado de puntos</h1>
 
 <div id="search_points" style="margin-top: 20px;">
@@ -7,7 +18,29 @@
   <% end %>
 </div>
 
-<table class="table table-striped table-bordered">
+<div class="row-fluid">
+
+  <div id="gMap" class="span10 well"> 
+    <div id="map_canvas" style="width:100%; height:100%"></div>  
+  </div>  
+
+  <% if current_user  %>
+    <div class="span4 well"> 
+      <h3>Tus puntos: </h3>
+      <ul id="yourPoints">
+        <% @points.each do |p| %>
+          <% if p.user && p.user.id == current_user.id %>
+            <li><%= link_to p.place, p %> <%= link_to " (ver)", "#" %> <span class="hidden"><%= p.latitude.to_s+","+p.longitude.to_s %></span></li>            
+          <% end %>
+        <% end %>
+      </ul>
+      <span id="zoomIn" class="badge success">Zoom In</span>
+      <span id="zoomOut" class="badge success">Zoom Out</span>
+    </div>
+  <% end %>
+  
+  <div class="span16 well">
+    <table class="table table-striped table-bordered">
   <tr>
     <th>Nombre</th>
     <th>Creador</th>
@@ -44,10 +77,62 @@
   <% end %>
 </table>
 <p id="notice"><%= notice %></p>
+</div>  
 
 
-<%= link_to 'Nuevo Punto', new_point_path, class: "btn" %>
 
 
+
+<script type="text/javascript">  
+  $(document).ready(function() {
+  function initialize() {
+    <% @point = @points.first %>
+
+    var latlng = new google.maps.LatLng(<%= @point.latitude %>, <%= @point.longitude%>);    
+    var myOptions = {
+      zoom:12,
+      center:latlng,
+      mapTypeId:google.maps.MapTypeId.ROADMAP,      
+    };
+
+    var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);  
+
+    var marker = new google.maps.Marker({
+      position:latlng,
+      title: "<%= @point.place.to_s + " (" + @point.latitude.to_s + ',' + @point.longitude.to_s + ')' %>",
+      map: map,
+      icon:new google.maps.MarkerImage('/assets/cyclingMarker.png', new google.maps.Size(32, 37))
+    });
+
+    var marker2;
+    <% @points.each do |p| %>
+    
+      marker2 = new google.maps.Marker({
+        position: new google.maps.LatLng(<%= p.latitude %> , <%= p.longitude %>),
+        title: "<%= p.place.to_s + " (" + p.latitude.to_s + ',' + p.longitude.to_s + ')' %>",
+        map: map,
+        icon:new google.maps.MarkerImage('/assets/cyclingMarker.png', new google.maps.Size(32, 37))
+      });
+
+    <% end %>
+
+  $("#yourPoints li").click(function(){ 
+      var coord = $(this).children("span").text().split(",");      
+      map.setCenter(new google.maps.LatLng(coord[0],coord[1]));
+      map.setZoom(16);
+  });
+  $("#zoomIn").click(function(){       
+      map.setZoom(map.getZoom()+1);
+  });
+  $("#zoomOut").click(function(){       
+      map.setZoom(map.getZoom()-1);
+  });
+
+  }
+  google.maps.event.addDomListener(window, 'load', initialize); 
+ 
+    });    
+   
+  </script>
 
 

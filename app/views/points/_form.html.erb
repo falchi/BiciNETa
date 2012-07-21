@@ -14,8 +14,8 @@
     <div id="search_points">      
       <%= form_for( @point, url: request.fullpath, method: :get, html: {class: "well form-inline"}) do |f|%>
         <%= f.label :address, "Dirección " %>
-        <%= f.text_field :lat, value: @point.latitude, class: "input-mini" %>        
-        <%= f.text_field :lon, value: @point.longitude, class: "input-mini" %>
+        <%= f.hidden_field :lat, value: @point.latitude, class: "input-mini" %>        
+        <%= f.hidden_field :lon, value: @point.longitude, class: "input-mini" %>
         <%= text_field_tag :search, params[:search], class: "input-xlarge" %>        
         <%= submit_tag :Buscar, id: "search_place", class: "input-mini btn" %>      
       <% end %>
@@ -120,7 +120,8 @@
       position:latLng,
       title: "Nuevo Lugar",
       map: map,
-      draggable: true
+      draggable: true,
+      icon:new google.maps.MarkerImage('/assets/cyclingMarker.png', new google.maps.Size(32, 37))
     });
 
     // Update current position info.
