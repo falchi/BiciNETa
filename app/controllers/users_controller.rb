@@ -56,7 +56,14 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit     
-    @user = User.find(params[:id])    
+    @user = User.find(params[:id])
+    unless current_user && (  current_user.id == params[:id].to_i || current_user.is_admin?) 
+      respond_to do |format|
+        flash[:error] = "No puedes editar a otro usuario"
+        format.html { redirect_to @user }
+      end
+      
+    end         
   end
 
   # POST /users

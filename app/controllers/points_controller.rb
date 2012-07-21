@@ -42,6 +42,11 @@ class PointsController < ApplicationController
   def new
     @point = Point.new
 
+    unless params[:search].nil?
+      coord = Geocoder.coordinates(params[:search])
+      @point.latitude = coord[0]#params[:point][:latitude]
+      @point.longitude = coord[1]#params[:point][:longitude]
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @point }
@@ -65,6 +70,18 @@ class PointsController < ApplicationController
 
   def edit
     @point = Point.find(params[:id])
+
+    unless params[:search].nil?
+      @point.latitude = params[:point][:latitude]
+      @point.longitude = params[:point][:longitude]
+    end
+    
+    unless current_user && ( @point.user && (@point.user.id == current_user.id)  || current_user.is_admin?)     
+      respond_to do |format|
+        flash[:error] = "No puedes editar un punto creado por otro usuario."
+        format.html { redirect_to @point }
+      end
+    end  
   end
 
   def update

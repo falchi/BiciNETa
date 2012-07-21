@@ -38,7 +38,7 @@
             <div class="btn-group pull-right">             
               <button class="btn">
                 <i class="icon-user"></i>
-                <%= (current_user.name).titleize %>
+                <%= link_to (current_user.name).titleize, current_user %>
               </button>
               <button class="btn dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>

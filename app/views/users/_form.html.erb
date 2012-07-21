@@ -19,8 +19,9 @@
   <%= f.text_field :email %>
   
   <% if current_user && current_user.is_admin? %>
-    <%= f.label :is_admin, "Admin" %>  
-    <%= f.check_box :is_admin %>
+    <label class="checkbox">
+        <%= f.check_box :is_admin %> <%= f.label :is_admin, "Admin" %>
+    </label>
   <% end %>
 
   <% if current_user && current_user.id == params[:id].to_i  %>  

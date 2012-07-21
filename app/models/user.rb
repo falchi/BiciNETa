@@ -8,15 +8,16 @@ class User < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates_presence_of :name, :email, :password 
+  validates_presence_of :name, :email
   validates_presence_of :password, :on => :create
-  validates_presence_of :password_confirmation, :unless => :password_present?
+  
 
   validates :email, format: {with: VALID_EMAIL_REGEX},
                     uniqueness: {case_sensitive: false},
                     confirmation: true #crea el pseudo-atributo "email_confirmation"
   
   validates :password, :confirmation => true
+  validates_presence_of :password_confirmation, :unless => :password_present?
   
   attr_accessible :name, :email, :is_admin, :password, :password_confirmation
 

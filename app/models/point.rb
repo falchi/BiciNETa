@@ -3,8 +3,14 @@ class Point < ActiveRecord::Base
 
   belongs_to :user
 
+  #de dirección a coordenada
   geocoded_by :address
   after_validation :geocode
+
+  #de coordenada a dirección
+  #reverse_geocoded_by :latitude, :longitude
+  #after_validation :reverse_geocode 
+
   before_save :checkValidPlace
 
   validates :place, :presence => true

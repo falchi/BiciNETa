@@ -16,6 +16,7 @@ BiciNETa::Application.routes.draw do
   resources :points do
       collection do
         post :save_coords
+        get :search_place
       end
     end
 

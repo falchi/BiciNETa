@@ -5,12 +5,12 @@
   body { height: 100%; }  
   .container-fluid { height: 100%;}
   .row-fluid { height: 80%;}
-  #gMap { height: 80%; width: 50%;}
+  #gMap { height: 100%; width: 50%;}
 </style>
 
 <div class="row-fluid">
-  <div id="gMap" class="span10">
-    <h1><%= @point.place %></h1>  
+
+  <div id="gMap" class="span10">  
     <br>
     <div id="map_canvas" style="width:100%; height:100%"></div>  
   </div>
@@ -33,13 +33,7 @@
     </p>
 
   </div>
-  <div class="span3">
-    <!--
-    <p>
-      <%= image_tag "http://maps.google.com/maps/api/staticmap?size=300x200&sensor=false&zoom=13&markers=#{@point.latitude}%2C#{@point.longitude}" %>
-    </p>
-  -->
-
+  <div class="span3 well">
     <p>
       <b>Creador:</b>
       <% if @user.nil? %>
@@ -53,7 +47,9 @@
 
 </div>
 
-<%= link_to 'Edit', edit_point_path(@point), class: "btn" %>
+<% if current_user && ( @point.user && ( @point.user.id == current_user.id)  || current_user.is_admin?) %> 
+  <%= link_to 'Edit', edit_point_path(@point), class: "btn" %>
+<% end %>
 <%= link_to 'Back', points_path, class: "btn" %>
 
 <script type="text/javascript">
