@@ -23,7 +23,13 @@
         <td>
           <%= link_to p.place, p %>
         </td>
-        <td><%= link_to p.user.name, p.user %></td>
+        <td>
+        <% if p.user.nil? %>
+          <%= link_to "usuario eliminado", "#" %>
+        <% else %>
+          <%= link_to p.user.name, p.user %>
+        <% end %>        
+        </td>
         <td><%= p.address %></td>
         <td><%= p.latitude %></td>
         <td><%= p.longitude %></td>

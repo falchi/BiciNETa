@@ -1,4 +1,21 @@
+# encoding: utf-8
 class UsersController < ApplicationController
+
+  before_filter :check_login, :only => [:edit]
+
+  def check_admin
+    unless current_user && current_user.is_admin?
+      flash[:info] = "Para "
+    end    
+  end
+
+  def check_login
+    unless signed_in?
+      flash[:info] = "Debes loguearte para realizar esta operación"
+      redirect_to root_path
+    end
+  end
+
   # GET /users
   # GET /users.json
   def index
@@ -38,12 +55,8 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-    if current_user.is_admin? 
-      @user = User.find(params[:id])
-    else
-      redirect_to welcome_path
-    end
+  def edit     
+    @user = User.find(params[:id])    
   end
 
   # POST /users
@@ -57,7 +70,7 @@ class UsersController < ApplicationController
         format.html { redirect_to root_path, success: 'Bienvenido '+@user.name+'! :)' }
         format.json { render json: @user, status: :created, location: @user }
       else        
-        #flash[:error] = "Vuelve a llenar el formulario de registro, ocurrieron errores!"
+        flash[:error] = "Vuelve a llenar el formulario de registro, ocurrieron errores!"
         format.html { render "sessions/welcome" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -69,9 +82,13 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
+    if params[:user][:password].blank?
+      params[:user].delete("password")
+    end
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, success: 'User was successfully updated.' }
+        format.html { redirect_to @user, success: 'Se actualizaron los datos del usuario correctamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -87,7 +104,8 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to url_for(action: :index), notice: "El usuario " + @user.name + " ha sido eliminado." }
+      flash[:info] = "El usuario " + @user.name + " ha sido eliminado." 
+      format.html { redirect_to url_for(action: :index) }
       format.json { head :no_content }
     end
   end

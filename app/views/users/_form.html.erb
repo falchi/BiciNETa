@@ -1,33 +1,42 @@
+<% if @user.errors.any? %>
+    <div class="alert alert-error">
+      <span class="label label-important">
+        Hay <%= pluralize(@user.errors.count, "error", "errores") %>:
+      </span><br><br>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
 
-  <%= form_for(@user) do |f| %>
-      <% if @user.errors.any? %>
-          <div id="error_explanation">
-            <h2> Hay <%= pluralize(@user.errors.count, "error", "errores") %>, no se pudo guardar el usuario:</h2>
-            <ul>
-              <% @user.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-      <% end %>
+<%= form_for(@user) do |f| %>
+  <%= f.label :name, "Nombre" %>
+  <%= f.text_field :name %>
 
-      <div class="field">
-        <%= f.label :name, "Nombre" %>
-        <%= f.text_field :name %>
-      </div>
-      <div class="field">
-        <%= f.label :email %>
-        <%= f.text_field :email %>
-      </div>
-      <div class="field">
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-      </div>
-      <div class="field">        
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation %>
-      </div>      
-      <div class="actions">
-        <%= f.submit %>
-      </div>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  
+  <% if current_user && current_user.is_admin? %>
+    <%= f.label :is_admin, "Admin" %>  
+    <%= f.check_box :is_admin %>
   <% end %>
+
+  <% if current_user && current_user.id == params[:id].to_i  %>  
+    <%= f.label :password, "Contraseña"  %>
+    <%= f.password_field :password %>
+
+    <%= f.label :password_confirmation, "Confirmar contraseña" %>
+    <%= f.password_field :password_confirmation %>
+  <% end %>
+
+  <br>
+  <% if params[:action]== 'new' %>
+    <%= f.submit "Crear Usuario", class: "btn btn-primary" %>
+  <% elsif params[:action] == 'edit'||'update' %>
+    <%= f.submit "Guardar cambios", class: "btn btn-primary" %>
+  <% end %>
+  
+    
+<% end %>

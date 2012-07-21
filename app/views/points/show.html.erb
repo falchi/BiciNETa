@@ -42,7 +42,11 @@
 
     <p>
       <b>Creador:</b>
-      <%= link_to @user.name, @user %>
+      <% if @user.nil? %>
+          <%= link_to "usuario eliminado", "#" %>
+        <% else %>
+          <%= link_to @user.name, @user %>
+        <% end %>        
     </p>
 
   </div>

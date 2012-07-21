@@ -2,13 +2,17 @@
 
 <ul class="thumbnails">
   <li class="span1">
-    <img src="http://placehold.it/70x70" alt="" class="thumbnail">
+    <img src="http://placehold.it/70x70" alt="" class="thumbnail">    
   </li>
   <li class="span10">
     </br>
-    <h4><%= @user.name %></h4>
-
-    <%= @user.email %>
+    <strong><%= @user.name %></strong>
+    
+    <% if @user.is_admin? %>
+    <span class="badge badge-success">admin</span>
+    <% end %>
+    <br><br>
+    <p><%= " ("+@user.email+")"%></p>
 
   </li>
 </ul>
@@ -26,7 +30,7 @@
   <% end %>
 </table>
 
-<% if current_user &&current_user.is_admin? %> 
+<% if current_user && (  current_user.id == params[:id].to_i || current_user.is_admin?) %> 
   <%= link_to 'Edit', edit_user_path(@user), class: "btn" %>
 <% end %>
 <%= link_to 'Back', users_path, class: "btn" %>
