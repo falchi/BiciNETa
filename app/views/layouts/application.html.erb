@@ -5,15 +5,15 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
   <style type="text/css">
-      body {
-          padding-top: 60px;
-          padding-bottom: 40px;
-      }
+    body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
   </style>
 
 </head>
-
 <body>
 
 <div class="navbar navbar-fixed-top">
@@ -26,15 +26,15 @@
       </a>      
       <a class="brand" href="<%= root_path %>" >BiciNETa</a>      
       <ul class="nav">
-            <li class="divider-vertical" style="margin: 0 25px;"></li>
-            <li><%= link_to "Home", welcome_path %></li>
-            <li><%= link_to "Users", users_path %></li>
-            <li><%= link_to "Points", points_path %></li>
-          </ul> 
+        <li class="divider-vertical" style="margin: 0 25px;"></li>
+        <li><%= link_to "Home", welcome_path %></li>
+        <li><%= link_to "Users", users_path %></li>
+        <li><%= link_to "Points", points_path %></li>
+      </ul> 
 
       <div class="nav-collapse">       
-        <% if signed_in? %>            
-          
+        <% if signed_in? %>    
+
             <div class="btn-group pull-right">             
               <button class="btn">
                 <i class="icon-user"></i>
@@ -46,17 +46,18 @@
               <ul class="dropdown-menu">
                 <li><%= link_to "Perfil", current_user %></li>
                 <li class="divider"></li>
-                <li></i><%= link_to "Salir", signout_path, method: "delete" %></li>
-
+                <li><%= link_to "Salir", signout_path, method: "delete" %></li>
               </ul>
             </div>
 
         <% else %>
+
             <%= form_for(:session, url: sessions_path, html: {class: "navbar-form pull-right"}) do |f| %>
                 <%= f.text_field :email %>
                 <%= f.password_field :password %>
                 <%= f.submit "Entrar", class: "btn-primary" %>
             <% end %>
+
         <% end %>
 
       </div>
@@ -66,6 +67,7 @@
 </div>
 
 <div class="container-fluid">
+  
   <% flash.each do |key, value| %>
     <div class="alert alert-<%= key %>">
       <a class="close" data-dismiss="alert" href="#">×</a>
@@ -74,6 +76,7 @@
   <% end %> 
 
   <div class="row-fluid">   
+    
      <% @user = User.new unless @user%>
     <% if signed_in? %>      
       <%= render "layouts/user_sumary" %>
@@ -81,7 +84,7 @@
       <%= render "layouts/sign_up_form" %>
     <% end %>  
 
-    <div class="span10 well">
+    <div class="span10 well" style="height: 100%">
       <%= yield %>
     </div>
 
@@ -90,6 +93,7 @@
   <footer>
     <p>&copy; BiciNETa 2012</p>
   </footer>
+
   <%= debug(params) if Rails.env.development? %>
 </div>
 

@@ -12,6 +12,13 @@ class PointsController < ApplicationController
     end
   end
 
+  def testing
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @points }
+    end
+  end
+
   def show
     @point = Point.find(params[:id])
     @user = @point.user

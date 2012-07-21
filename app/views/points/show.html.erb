@@ -1,12 +1,12 @@
-<p id="notice"><%= notice %></p>
+
 
 <div class="row-fluid">
-  <div class="span3">
-    <p>
-      <b>Place:</b>
-      <%= @point.place %>
-    </p>
+  <div id="gMap" class="span10">
+    <%= render "layouts/testingMap" %>
+  </div>
 
+  <div class="span3">
+    <br><br><br><br><br><br><br>
     <p>
       <b>Address:</b>
       <%= @point.address %>
@@ -24,9 +24,11 @@
 
   </div>
   <div class="span3">
+    <!--
     <p>
       <%= image_tag "http://maps.google.com/maps/api/staticmap?size=300x200&sensor=false&zoom=13&markers=#{@point.latitude}%2C#{@point.longitude}" %>
     </p>
+  -->
 
     <p>
       <b>Creador:</b>
@@ -41,3 +43,6 @@
 
 <%= link_to 'Edit', edit_point_path(@point), class: "btn" %>
 <%= link_to 'Back', points_path, class: "btn" %>
+
+
+  

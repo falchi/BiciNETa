@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         sign_in @user
-        format.html { redirect_to root_path, notice: 'Bienvenido '+@user.name+'! :)' }
+        format.html { redirect_to root_path, success: 'Bienvenido '+@user.name+'! :)' }
         format.json { render json: @user, status: :created, location: @user }
       else        
         #flash[:error] = "Vuelve a llenar el formulario de registro, ocurrieron errores!"
@@ -71,7 +71,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, success: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

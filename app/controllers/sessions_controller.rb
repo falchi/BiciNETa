@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
       redirect_to root_path     
     else
       flash.now[:error] = 'Hubo un error al intentar conectarse. Revisa tu mail y contraseña ingresados!'
-      render 'new'
+      render 'welcome'
     end
   end
 

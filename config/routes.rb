@@ -11,6 +11,7 @@ BiciNETa::Application.routes.draw do
   match '/welcome', to: 'sessions#welcome'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+  match '/testing', to: 'sessions#testing'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
