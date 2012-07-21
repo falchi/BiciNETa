@@ -4,21 +4,22 @@
   html { height: 100% }
   body { height: 100%; }  
   .container-fluid { height: 100%;}
-  .row-fluid { height: 80%;}
+  .row-fluid { height: 90%;}
   #gMap { height: 100%; width: 50%;}
 </style>
 
 <div class="row-fluid">
 
-  <div id="gMap" class="span10">  
-    <br>
+  <div id="gMap" class="span10 well"> 
     <div id="map_canvas" style="width:100%; height:100%"></div>  
   </div>
 
   <div class="span3">
     <br><br><br><br><br><br><br>
+    <h1><%= @point.place %><h1>
+      <br><br>
     <p>
-      <b>Address:</b>
+      <b>Dirección:</b>
       <%= @point.address %>
     </p>
 
@@ -31,9 +32,6 @@
       <b>Longitude:</b>
       <%= @point.longitude %>
     </p>
-
-  </div>
-  <div class="span3 well">
     <p>
       <b>Creador:</b>
       <% if @user.nil? %>
@@ -43,8 +41,7 @@
         <% end %>        
     </p>
 
-  </div>
-
+  </div>  
 </div>
 
 <% if current_user && ( @point.user && ( @point.user.id == current_user.id)  || current_user.is_admin?) %> 

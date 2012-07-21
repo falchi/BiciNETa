@@ -14,7 +14,7 @@ class Point < ActiveRecord::Base
   before_save :checkValidPlace
 
   validates :place, :presence => true
-  #validates :address, :presence => true
+  validates :address, :presence => true
 
   def checkValidPlace
     return false if self.latitude.blank? || self.longitude.blank?

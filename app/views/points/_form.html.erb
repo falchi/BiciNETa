@@ -13,10 +13,10 @@
   <div id="gMap" class="span10 well" > <!--style="border: 1px solid green">-->        
     <div id="search_points">      
       <%= form_for( @point, url: request.fullpath, method: :get, html: {class: "well form-inline"}) do |f|%>
-        <%= f.label :address, "Dirección " %><br>
-        <%= text_field_tag :search, params[:search] %>        
-        <%= f.text_field :latitude, value: @point.latitude, class: "input-mini", disabled:"" %>        
-        <%= f.text_field :longitude, value: @point.longitude, class: "input-mini", disabled:"" %>
+        <%= f.label :address, "Dirección " %>
+        <%= f.text_field :lat, value: @point.latitude, class: "input-mini" %>        
+        <%= f.text_field :lon, value: @point.longitude, class: "input-mini" %>
+        <%= text_field_tag :search, params[:search], class: "input-xlarge" %>        
         <%= submit_tag :Buscar, id: "search_place", class: "input-mini btn" %>      
       <% end %>
     </div> 
@@ -24,10 +24,8 @@
     <div id="map_canvas" class="well" style="width:92%; height:65%"></div>      
   </div >
 
-  <div class="span5 well" >
-    <%= submit_tag "Agregar Punto", class: "btn btn-primary" %>          
-    
-    <%= form_for(@point, :url =>save_coords_points_path,:method => 'post', html: {class: "form-horizontal"}) do |f| %> 
+  <div class="span5 well" >    
+    <%= form_for(@point, html: {class: "form-horizontal"}) do |f| %> 
       <%= f.hidden_field :user_id, value: current_user.id %>
 
       <%= f.label :place, "Nombre del lugar" %>
@@ -36,30 +34,21 @@
       <%= f.label :address, "Dirección" %>
       <%= f.text_field :address %>
 
-      <%= f.text_field :latitude, value: @point.latitude, class: "input-mini", disabled:"" %>        
-        <%= f.text_field :longitude, value: @point.longitude, class: "input-mini", disabled:"" %>
+      <%= f.text_field :latitude, value: @point.latitude, class: "input-mini" %>        
+      <%= f.text_field :longitude, value: @point.longitude, class: "input-mini" %>
     
+      <br><br>
       <% if params[:action]== 'new' %>
         <%= f.submit "Crear Punto", class: "btn btn-primary" %>
       <% elsif params[:action] == 'edit'||'update' %>
         <%= f.submit "Guardar cambios", class: "btn btn-primary" %>
       <% end %>
+      <br><br>
+      <div id="markerStatus"><i></i></div>
 
     <p id="notice"><%= notice %></p>
   <% end %>
-
-  <div id="infoPanel">
-       <b>Marker status:</b>
-       <div id="markerStatus"><i>Click and drag the marker.</i></div>
-       <b>Current position:</b>
-       <div id="info"></div>
-       <b>Closest matching address:</b>
-       <div id="address"></div>
-   </div>
-  </div>
-
-  <div class="span3">
-    <% if @point.errors.any? %>
+<% if @point.errors.any? %>
       <div class="alert alert-error">
         <span class="label label-important">
           Hay <%= pluralize(@point.errors.count, "error", "errores") %>:
@@ -71,20 +60,14 @@
         </ul>
       </div>
     <% end %>
+
+  </div>
+
+  <div class="span3">
+    
   </div>  
 
 </div>
-  
-   
-<!--
-<%= "oijasdoifjasdoifjasdoifjasoidjfasidjf"%><br>
-<%= "params: ("+params[:latitude].to_s+","+ params[:longitude].to_s+")" %><br>
-<%= "@point: ("+@point.latitude.to_s+","+ @point.longitude.to_s+")" %>
--->
-
-<script type="text/javascript">
-
-</script>
 
 <script type="text/javascript">
     var geocoder = new google.maps.Geocoder();
@@ -96,7 +79,7 @@
            if (responses && responses.length > 0) {
                updateMarkerAddress(responses[0].formatted_address);
            } else {
-               updateMarkerAddress('Cannot determine address at this location.');
+               updateMarkerAddress('No se puede determinar esta dirección.');
            }
        });
      }
@@ -105,27 +88,24 @@
          document.getElementById('markerStatus').innerHTML = str;
      }
 
-    function updateMarkerPosition(latLng) {
-      document.getElementById('info').innerHTML = [
-                     latLng.lat(),
-                     latLng.lng()
-                 ].join(', ');
+    function updateMarkerPosition(latLng) {      
         $('#point_latitude').val(latLng.lat());
         $('#point_longitude').val(latLng.lng());
+        $('#point_lat').val(latLng.lat());
+        $('#point_lon').val(latLng.lng());
     }
 
     function updateMarkerAddress(str) {
-        document.getElementById('address').innerHTML = str;
         $('#point_address').val(str);
     }
 
   function initialize() {
-    <% if params[:commit] == "Buscar" %>
-      var latLng = new google.maps.LatLng(<%= @point.latitude %>, <%= @point.longitude%>);    
-      var zoom = 12
+    
+    var latLng = new google.maps.LatLng(<%= @point.latitude %>, <%= @point.longitude%>);    
+    <% if params[:action] == "edit" || "update" %>
+      var zoom = 15
     <% else %>
-    var latLng = new google.maps.LatLng(-33.457781,-70.590267);          
-      var zoom = 16
+      var zoom = 12
     <% end %>
     
     var myOptions = {
@@ -147,14 +127,14 @@
     updateMarkerPosition(latLng);
     geocodePosition(latLng);
 
-
     google.maps.event.addListener(marker, 'drag', function () {
-      updateMarkerStatus('Dragging...');
-        updateMarkerPosition(marker.getPosition());
+      updateMarkerStatus('... Buscando ...');
+      updateMarkerPosition(marker.getPosition());   
     });
 
     google.maps.event.addListener(marker, 'dragend', function () {
-        geocodePosition(marker.getPosition());
+      geocodePosition(marker.getPosition());
+      updateMarkerStatus('');
     });
   }
   google.maps.event.addDomListener(window, 'load', initialize);
