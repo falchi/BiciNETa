@@ -1,19 +1,50 @@
     <p id="notice"><%= notice %></p>
 
-    <ul class="thumbnails">
-      <li class="span1">
-        <img src="assets/bicinetaLOGO.png" alt="" class="thumbnail">
-      </li>
-      <br>
-      <li class="span10">
-        <h1>HighApps BiciNETa!</h1>
-      </li>
-    </ul>
+    <div class="row-fluid">
+      <div class="well">
+        <ul class="thumbnails">
+          <li class="span1">
+            <img src="assets/bicinetaLOGO.png" alt="" class="thumbnail">
+          </li>
+          <br>
+          <li class="span10">
+            <h1>Bienvenidos al sitio de BiciNETa!</h1>
+          </li>
+        </ul>
 
-    <p>Bienvenidos al sitio de BiciNETa.</p>
-    <p>
-    BiciNETa es una aplicación para smartphones android con la información necesaria para pedalear seguro por la ciudad.
-    </p>
-    <p>
-      Mapas con vías, talleres, tiendas, estacionamientos y todo lo que necesitas para organizar un viaje seguro e informarte de tu ruta en caso de que te quedes parado.
-    </p>
+        <p>
+        BiciNETa es una aplicación para smartphones android con la información necesaria para pedalear seguro por la ciudad.
+        </p>
+        <p>
+          Mapas con vías, talleres, tiendas, estacionamientos y todo lo que necesitas para organizar un viaje seguro e informarte de tu ruta en caso de que te quedes parado.
+        </p>
+
+      </div><!--/span-->
+    </div><!--/row-->
+
+    <div class="row-fluid">
+
+      <div class="span4 well ">
+        <h2>Busca!</h2><br>
+        <p>Busca entre los lugares que ya han sido ingresado por los mismos usuarios y descubre talleres cercanos a tu casa, tiendas camino a tu pega y mucho más!</p>
+        <%= form_tag points_path, {class: "form-inline", method: :get} do %>                        
+            <%= text_field_tag :search, params[:search], placeholder: "Ingresa el nombre del lugar" %>
+            <%= submit_tag "Buscar", class: "btn btn-primary" %>                
+        <% end %>         
+      </div><!--/span-->
+
+      <div class="span4 well">
+        <h2>Colabora!</h2><br>    
+        <p>Agrega diferentes lugares a los mapas para que la comunidad esté al tanto de los puntos de interés como ciclovías, talleres, tiendas, estaciones de servicio y más! </p>
+        <%= form_tag new_point_path, method: :get do %>            
+          <%= submit_tag "Agregar punto", class: "btn btn-primary" %>                            
+        <% end %>           
+      </div><!--/span-->
+
+      <div class="span4 well">
+        <h2>Evalúa y califica!</h2><br>
+        <p> Ingresa tu valoración por la atención que recibiste en un taller, el estado de una ciclovía o tu opinion sobre una tienda. </p>
+        <p> La comunidad <strong>BiciNETa</strong> te agradecerá tu opinión! </p>        
+      </div><!--/span-->
+
+    </div><!--/row-->
