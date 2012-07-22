@@ -1,19 +1,11 @@
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script> 
 
-<style type="text/css">
-  html { height: 100% }
-  body { height: 100%; }  
-  .container-fluid { height: 100%;}
-  .row-fluid { height: 90%; margin-top: 20px;}
-  #gMap { height: 100%; width: 50%;}
-</style>
-
-<div class="row-fluid">
+<div class="row-fluid" style="margin-top: 20px;">
   
-  <div id="gMap" class="span10 well" > <!--style="border: 1px solid green">-->        
+  <div class="span7 well" >
     <div id="search_points">      
       <%= form_for( @point, url: request.fullpath, method: :get, html: {class: "well form-inline"}) do |f|%>
-        <%= f.label :address, "Dirección " %>
+        <%= f.label :address, "Buscar dirección: " %>
         <%= f.hidden_field :lat, value: @point.latitude, class: "input-mini" %>        
         <%= f.hidden_field :lon, value: @point.longitude, class: "input-mini" %>
         <%= text_field_tag :search, params[:search], class: "input-xlarge" %>        
@@ -21,7 +13,7 @@
       <% end %>
     </div> 
 
-    <div id="map_canvas" class="well" style="width:92%; height:65%"></div>      
+    <div id="map_canvas" class="span7 well"></div>  
   </div >
 
   <div class="span5 well" >    

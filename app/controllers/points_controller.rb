@@ -10,10 +10,11 @@ class PointsController < ApplicationController
   end
 
   def index
-    if params[:search].present?
-      @points = Point.where("place like ?", "%" + params[:search].to_s + "%")
+    @points = Point.all
+    if params[:search].present?      
+      @points_search = Point.where("place like ?", "%" + params[:search].to_s + "%")
     else
-      @points = Point.all
+      @points_search = @points
     end
 
     respond_to do |format|
