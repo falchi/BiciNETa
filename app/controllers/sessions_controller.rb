@@ -12,16 +12,43 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_email(params[:session][:email]) #busca según el email ingresado
-    if user && user.log_in(params[:session][:password]) #si existe y coincide la pass => retorna el user
-      sign_in user
-      msg = (user.is_admin ? "[Eres Administrador]" : " :) ")
-      flash[:success] = 'Bienvenido(a) ' + user.name + '! ' + msg
-      redirect_to root_path     
-    else
-      flash.now[:error] = 'Hubo un error al intentar conectarse. Revisa tu mail y contraseña ingresados!'
-      render 'welcome'
+    #raise env['omniauth.auth'].to_yaml #twitter hash
+    #auth_hash = request.env['omniauth.auth'] #fb hash
+    auth = request.env['omniauth.auth']
+
+    if auth
+      @authorization = Authorization.find_by_provider_and_uid(auth["provider"], auth["uid"]) 
+      if @authorization
+        sign_in @authorization.user
+        msg = (@authorization.user.is_admin ? "[Eres Administrador]" : " :) ")
+        flash[:success] = 'Te has logueado vía '+auth["provider"]+'. Bienvenido(a) ' + @authorization.user.name + '! ' + msg
+        redirect_to root_path #render :text => "Welcome back #{@authorization.user.name}! You have already signed up."
+      else               
+        #raise auth.to_yaml
+        sign_in @authorization.user
+        user = User.new :name => auth["info"]["name"], :email => auth["info"]["email"]
+        user.authorizations.build :provider => auth["provider"], :uid => auth["uid"]
+        if user.save(validate: false)
+          flash[:success] = 'Te has logueado vía '+auth["provider"]+'. Bienvenido(a) ' + auth["info"]["name"] + '! '# + msg     
+          redirect_to root_path #render :text => "Hi #{user.name}! You've signed up."
+        else
+          msg = "\n"+user.errors.to_yaml
+          flash[:error] = 'No se pudo crear el usuario '+ auth["info"]["name"]+ ' para '+ auth["provider"]     +"......"+msg
+          redirect_to root_path #render :text => "Hi #{user.name}! You've signed up."
+        end
+        
+      end
+
+    else #if normal signup
+      raise "HELLO!"
+
     end
+
+    
+ 
+    #render :text => auth_hash.inspect
+
+    
   end
 
   def destroy

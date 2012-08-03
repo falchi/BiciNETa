@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
   before_save :encrypt_password, :if => :password_changed?
 
   has_many :points
+  has_many :authorizations
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates_presence_of :name, :email
   validates_presence_of :password, :on => :create
-  
 
   validates :email, format: {with: VALID_EMAIL_REGEX},
                     uniqueness: {case_sensitive: false},
@@ -21,12 +21,16 @@ class User < ActiveRecord::Base
   
   attr_accessible :name, :email, :is_admin, :password, :password_confirmation
 
+  def has_authorization?
+    self.authorizations.provider
+  end
+
   def password_present?
   	!password.nil?
   end
 
   def email_downcase
-      self.email = self.email.downcase
+      self.email = self.email.downcase if self.email
   end
 
   def log_in(submitted_password) 

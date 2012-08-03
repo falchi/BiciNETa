@@ -7,6 +7,11 @@ BiciNETa::Application.routes.draw do
   #login
   resources :sessions, only: [:new, :create, :destroy]
 
+  #twitter auth
+  match 'auth/:twitter/callback', to: 'sessions#create'
+  match 'auth/:facebook/callback', to: 'sessions#create'
+  match 'auth/failure', to: redirect('/')  
+
   match '/signup', to: 'users#new', as: "sign_up"
   match '/welcome', to: 'sessions#welcome'
   match '/signin', to: 'sessions#new'

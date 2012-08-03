@@ -1,5 +1,5 @@
 <div class="span2">  
-  <div class="well sidebar-nav">
+  <div class="well sidebar-nav">    
     <h2 style="border-bottom: 1px solid #B0B0B0;">Regístrate!</h2>    
     <br>    
     <% if @user.errors.any? %>
@@ -29,7 +29,20 @@
       <%= f.password_field :password_confirmation, class: "span15" %>
 
       <br>
-      <%= f.submit "Registrarse", class: "btn btn-large btn-primary span15" %>
+      <%= f.submit "Registrarse", class: "btn btn-large btn-primary span15" %>      
     <% end %>
+        
+    <p>También ingresa vía: </p>
+    <p><%= link_to "Twitter", "/auth/twitter", class: "btn centered"%></p>
+    <p><%= link_to "Facebook", "/auth/facebook", class: "btn centered"%></p>
+    
+  </div>
+  <div class="well sidebar-nav">
+    <a href="https://twitter.com/bicinetapp" class="twitter-follow-button" data-show-count="false" data-lang="es">
+      Seguir a @BiciNETa
+    </a>
+    <script>
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    </script>
   </div>
 </div>

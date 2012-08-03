@@ -57,7 +57,7 @@
                 <%= f.text_field :email %>
                 <%= f.password_field :password %>
                 <%= f.submit "Entrar", class: "btn-primary" %>
-            <% end %>
+            <% end %>            
 
         <% end %>
 
@@ -76,23 +76,23 @@
     </div>
   <% end %> 
 
-  <div class="row-fluid">   
+  <div class="row-fluid">      
     
-     <% @user = User.new unless @user%>
+    <% @user = User.new unless @user%>
     <% if signed_in? %>      
       <%= render "layouts/user_sumary" %>
     <% else %> 
       <%= render "layouts/sign_up_form" %>
-    <% end %>  
+    <% end %>      
 
-    <div class="span10 well">
+    <div class="span10 well">      
       <%= yield %>
     </div>
 
   </div>
 
   <footer>
-    <p>&copy; BiciNETa 2012</p>
+    <p>&copy; BiciNETa 2012</p>  
   </footer>
 
   <%= debug(params) if Rails.env.development? %>
