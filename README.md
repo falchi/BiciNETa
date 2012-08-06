@@ -1,4 +1,6 @@
 BiciNETa
 ========
 
-FeriaSW
+FeriaSW 2012
+
+(c) HighApps
